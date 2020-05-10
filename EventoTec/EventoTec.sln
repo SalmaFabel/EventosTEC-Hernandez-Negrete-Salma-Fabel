@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosTec.Library", "EventosTec.Library\EventosTec.Library.csproj", "{6BE3B826-F075-4813-8DF1-86C803FE82B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventosTec.Library", "EventosTec.Library\EventosTec.Library.csproj", "{6BE3B826-F075-4813-8DF1-86C803FE82B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventosTec.Web", "EventosTec.Web\EventosTec.Web.csproj", "{38091836-F137-45FC-BF8E-368AC5C69814}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventoTec.Web", "EventoTec.Web\EventoTec.Web.csproj", "{AB3A297A-9BC8-4FB5-B84F-B24BC3F37DD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{6BE3B826-F075-4813-8DF1-86C803FE82B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE3B826-F075-4813-8DF1-86C803FE82B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE3B826-F075-4813-8DF1-86C803FE82B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38091836-F137-45FC-BF8E-368AC5C69814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38091836-F137-45FC-BF8E-368AC5C69814}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38091836-F137-45FC-BF8E-368AC5C69814}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38091836-F137-45FC-BF8E-368AC5C69814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB3A297A-9BC8-4FB5-B84F-B24BC3F37DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB3A297A-9BC8-4FB5-B84F-B24BC3F37DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB3A297A-9BC8-4FB5-B84F-B24BC3F37DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB3A297A-9BC8-4FB5-B84F-B24BC3F37DD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

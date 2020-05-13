@@ -4,14 +4,16 @@ using EventoTec.Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventoTec.Web.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    partial class DataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200513000524_CreateCategory")]
+    partial class CreateCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,10 +30,14 @@ namespace EventoTec.Web.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
+                    b.Property<int>("EventId");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.ToTable("Categories");
                 });
@@ -92,8 +98,6 @@ namespace EventoTec.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId");
-
                     b.Property<int>("CityId");
 
                     b.Property<string>("Description");
@@ -112,20 +116,21 @@ namespace EventoTec.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("CityId");
 
                     b.ToTable("events");
                 });
 
+            modelBuilder.Entity("EventoTec.Web.Models.Entities.Category", b =>
+                {
+                    b.HasOne("EventoTec.Web.Models.Entities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("EventoTec.Web.Models.Entities.Event", b =>
                 {
-                    b.HasOne("EventoTec.Web.Models.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("EventoTec.Web.Models.Entities.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")

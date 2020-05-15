@@ -1,4 +1,5 @@
 ﻿using EventoTec.Web.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventoTec.Web.Models
 {
-    public class DataDbContext:DbContext
+    public class DataDbContext: IdentityDbContext<User>
     {
         public DataDbContext(DbContextOptions<DataDbContext> options) : base(options)
         {
@@ -18,6 +19,8 @@ namespace EventoTec.Web.Models
         public DbSet<City> cities { get; set; }
         public DbSet<Event> events { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+
 
     }
 }

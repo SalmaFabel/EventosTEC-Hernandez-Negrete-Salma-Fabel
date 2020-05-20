@@ -1,4 +1,5 @@
-﻿using EventoTec.Web.Models.Entities;
+﻿using EventoTec.Web.Models;
+using EventoTec.Web.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EventoTec.Web.Data.Helpers
 {
-    interface IUserHelper
+    public interface IUserHelper
     {
         Task<User> GetUserByEMailAsync(string email);
         Task<IdentityResult> AddUserAssync(User user, string Password);
@@ -15,5 +16,8 @@ namespace EventoTec.Web.Data.Helpers
         Task AddUserToRoleAsync(User user, string roleName);
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);
+
+        Task<SignInResult> LoginAsync(LoginViewModel model);
+        Task LogoutAsync();
     }
 }

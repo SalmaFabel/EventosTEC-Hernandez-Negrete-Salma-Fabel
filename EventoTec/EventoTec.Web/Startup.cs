@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EventoTec.Web.Data;
+using EventoTec.Web.Data.Helpers;
 using EventoTec.Web.Models;
+using EventoTec.Web.Models.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,11 +36,24 @@ namespace EventoTec.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddIdentity<User, IdentityRole>(
+               cfg => {
+                   cfg.User.RequireUniqueEmail = true;
+                   cfg.Password.RequireDigit = false;
+                   cfg.Password.RequiredUniqueChars = 0;
+                   cfg.Password.RequireLowercase = false;
+                   cfg.Password.RequireNonAlphanumeric = false;
+                   cfg.Password.RequireUppercase = false;
+               }).AddEntityFrameworkStores<DataDbContext>();
+
+            services.AddScoped<IUserHelper, UserHelper>();
+
             services.AddDbContext<DataDbContext>(cfg =>
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddTransient<SeedDb>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -57,6 +74,7 @@ namespace EventoTec.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>

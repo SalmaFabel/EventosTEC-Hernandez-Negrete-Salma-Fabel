@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventoTec.Web.Models;
 using EventoTec.Web.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventoTec.Web.Controllers
 {
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly DataDbContext _context;
@@ -22,7 +24,7 @@ namespace EventoTec.Web.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            var dataDbContext = _context.events.Include(a => a.Category).Include(a => a.City);
+            var dataDbContext = _context.events.Include(a => a.Category).Include(a => a.City).Include(a => a.Client);
             return View(await dataDbContext.ToListAsync());
         }
 
@@ -37,6 +39,7 @@ namespace EventoTec.Web.Controllers
             var @event = await _context.events
                 .Include(a => a.Category)
                 .Include(a => a.City)
+                .Include(a => a.Client)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {
@@ -51,6 +54,7 @@ namespace EventoTec.Web.Controllers
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
             ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name");
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
             return View();
         }
 
@@ -59,7 +63,7 @@ namespace EventoTec.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,EvenDate,Description,Picture,People,Duration,CityId,CategoryId")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Name,EvenDate,Description,Picture,People,Duration,CityId,ClientId,CategoryId")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -69,6 +73,7 @@ namespace EventoTec.Web.Controllers
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", @event.CategoryId);
             ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name", @event.CityId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", @event.ClientId);
             return View(@event);
         }
 
@@ -87,6 +92,7 @@ namespace EventoTec.Web.Controllers
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", @event.CategoryId);
             ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name", @event.CityId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", @event.ClientId);
             return View(@event);
         }
 
@@ -95,7 +101,7 @@ namespace EventoTec.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,EvenDate,Description,Picture,People,Duration,CityId,CategoryId")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,EvenDate,Description,Picture,People,Duration,CityId,ClientId,CategoryId")] Event @event)
         {
             if (id != @event.Id)
             {
@@ -124,6 +130,7 @@ namespace EventoTec.Web.Controllers
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", @event.CategoryId);
             ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name", @event.CityId);
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", @event.ClientId);
             return View(@event);
         }
 
@@ -138,6 +145,7 @@ namespace EventoTec.Web.Controllers
             var @event = await _context.events
                 .Include(a => a.Category)
                 .Include(a => a.City)
+                .Include(a => a.Client)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
             {

@@ -29,8 +29,11 @@ namespace EventoTec.Web.Models.Entities
         [ForeignKey("CityId")]
         public City City { get; set; }
         [Required]
+        public int ClientId { get; set; }
+        [ForeignKey("ClientId")]
+        public Client Client { get; set; }
         public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
+     
         public Category Category { get; set; }
 
 

@@ -17,6 +17,7 @@ namespace EventoTec.Web.Models
 
         public DbSet<Client> Clients { get; set; }
         public DbSet<City> cities { get; set; }
+        public object Cities { get; internal set; }
         public DbSet<Event> events { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Manager> Managers { get; set; }

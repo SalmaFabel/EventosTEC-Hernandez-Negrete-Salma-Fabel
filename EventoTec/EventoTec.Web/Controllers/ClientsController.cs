@@ -24,7 +24,11 @@ namespace EventoTec.Web.Controllers
         // GET: Clients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clients.ToListAsync());
+            var clients = await _context.Clients
+                .Include(a => a.Events)
+                .Include(a => a.User)
+               .ToListAsync();
+            return View(clients);
         }
 
         // GET: Clients/Details/5
@@ -35,7 +39,7 @@ namespace EventoTec.Web.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Clients
+            var client = await _context.Clients.Include(u => u.User).Include(e => e.Events)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (client == null)
             {
@@ -56,7 +60,7 @@ namespace EventoTec.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Address")] Client client)
+        public async Task<IActionResult> Create(Client client)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +92,7 @@ namespace EventoTec.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Address")] Client client)
+        public async Task<IActionResult> Edit(int id, Client client)
         {
             if (id != client.Id)
             {

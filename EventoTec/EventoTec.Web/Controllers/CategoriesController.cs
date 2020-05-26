@@ -25,7 +25,7 @@ namespace EventoTec.Web.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            return View(await _context.Categories.Include(e => e.Events).ToListAsync());
         }
 
         // GET: Categories/Details/5

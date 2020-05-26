@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="text-center">Detalles de @Model.Name</h2>
 
-<div>
-    <h4>City</h4>
+<div class="text-center">
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -30,7 +30,32 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<hr />
+<div class="col-md-12">
+    <h4 class="text-center">Eventos</h4>
+    <table class="table table-condensed">
+        <tr>
+            <td>Titulo</td>
+            <td>Fecha</td>
+            <td>Duracion</td>
+            <td>Personas</td>
+        </tr>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.EvenDate</td>
+                <td>@item.Duration</td>
+                <td>@item.People</td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="col-md-12">
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
+    |
+    <a asp-action="Index">Regresar</a>
 </div>

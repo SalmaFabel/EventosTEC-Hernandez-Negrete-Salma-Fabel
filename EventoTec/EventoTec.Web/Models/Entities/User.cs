@@ -9,6 +9,7 @@ namespace EventoTec.Web.Models.Entities
 {
     public class User : IdentityUser
     {
+       
         [Display(Name = "Nombre Completo")]
         [MaxLength(150)]
         public string FullName { get; set; }

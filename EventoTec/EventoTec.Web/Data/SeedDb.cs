@@ -62,6 +62,7 @@ namespace EventoTec.Web.Data
             {
                 user = new User
                 {
+                  
                     FullName = firstName + " " + lastName,
                     Email = email,
                     UserName = email,

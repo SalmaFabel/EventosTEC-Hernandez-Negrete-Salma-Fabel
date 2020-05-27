@@ -52,18 +52,21 @@ namespace EventoTec.Web.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description");
-            ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name");
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
+            var username = User.Identity.Name;
+            var userid = _context.Clients.Where(a => a.User.Email == username).FirstOrDefault();
+            ViewBag.ClientId = userid.Id;
+            ViewData["CityId"] = new SelectList(_context.cities,"Id","Name");
+            ViewData["CategoryId"] = new SelectList(_context.Categories,"Id","Name");
             return View();
         }
+
 
         // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,EvenDate,Description,Picture,People,Duration,CityId,ClientId,CategoryId")] Event @event)
+        public async Task<IActionResult> Create(Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -75,6 +78,7 @@ namespace EventoTec.Web.Controllers
             ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name", @event.CityId);
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", @event.ClientId);
             return View(@event);
+
         }
 
         // GET: Events/Edit/5

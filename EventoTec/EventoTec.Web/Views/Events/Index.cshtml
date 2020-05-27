@@ -6,85 +6,34 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Nuevo Evento</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EvenDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.People)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Client)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EvenDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Picture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.People)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Client.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Description)
-            </td>
-            <td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning m-1">Editar</a>
-                }
+<div class="container">
 
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info m-1">Detalle</a>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger m-1">Eliminar</a>
-                }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <h2 class="text-center">Lista de Evento</h2>
+    @if (User.IsInRole("Client"))
+    {
+        <p>
+            <a asp-action="Create" class="btn btn-sm btn-primary">Nuevo Evento</a>
+        </p>
+    }
+    else if (User.IsInRole("Admin"))
+    {
+       
+    }
+
+<div class="row col-md-12">
+    <div class="col-md-11 col-md-offset-1">
+        @foreach (var item in Model)
+        {
+
+            <div class="list-group">
+                <a href="@Url.Action("Details","Events",new { id=item.Id})" class="list-group-item">
+                    <h4 class="list-group-item-heading"><i class="glyphicon glyphicon-calendar"></i> @item.Name</h4>
+                    <p class="list-group-item-text">@item.EvenDate</p>
+                </a>
+            </div>
+        }
+    </div>
+   
+</div>
+
+</div>

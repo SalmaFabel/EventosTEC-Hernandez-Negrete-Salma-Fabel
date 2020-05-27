@@ -14,6 +14,7 @@ namespace EventoTec.Web.Controllers
     [Authorize(Roles = "Admin")]
     public class ClientsController : Controller
     {
+      
         private readonly DataDbContext _context;
 
         public ClientsController(DataDbContext context)
@@ -24,6 +25,7 @@ namespace EventoTec.Web.Controllers
         // GET: Clients
         public async Task<IActionResult> Index()
         {
+
             var clients = await _context.Clients
                 .Include(a => a.Events)
                 .Include(a => a.User)
@@ -60,7 +62,7 @@ namespace EventoTec.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Client client)
+        public async Task<IActionResult> Create([Bind("Id,Address")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +94,7 @@ namespace EventoTec.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Address")] Client client)
         {
             if (id != client.Id)
             {

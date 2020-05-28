@@ -60,6 +60,22 @@ namespace EventoTec.Web.Controllers
             return View();
         }
 
+        public IActionResult CreateEvent()
+        {
+            ViewBag.ClientId = _context.Clients.Include(u => u.User).ToList();
+            ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateEvent(Event @event)
+        {
+            _context.Add(@event);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        }
 
         // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -74,11 +90,10 @@ namespace EventoTec.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Description", @event.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", @event.CategoryId);
             ViewData["CityId"] = new SelectList(_context.cities, "Id", "Name", @event.CityId);
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", @event.ClientId);
             return View(@event);
-
         }
 
         // GET: Events/Edit/5

@@ -17,23 +17,24 @@
     }
     else if (User.IsInRole("Admin"))
     {
-       
+        <p>
+            <a asp-action="CreateEvent" class="btn btn-sm btn-primary">Nuevo Evento</a>
+        </p>
     }
+    <div class="row col-md-12">
+        <div class="col-md-11 col-md-offset-1">
+            @foreach (var item in Model)
+            {
 
-<div class="row col-md-12">
-    <div class="col-md-11 col-md-offset-1">
-        @foreach (var item in Model)
-        {
+                <div class="list-group">
+                    <a href="@Url.Action("Details","Events",new { id=item.Id})" class="list-group-item">
+                        <h4 class="list-group-item-heading"><i class="glyphicon glyphicon-calendar"></i> @item.Name</h4>
+                        <p class="list-group-item-text">@item.EvenDate</p>
+                    </a>
+                </div>
+            }
+        </div>
 
-            <div class="list-group">
-                <a href="@Url.Action("Details","Events",new { id=item.Id})" class="list-group-item">
-                    <h4 class="list-group-item-heading"><i class="glyphicon glyphicon-calendar"></i> @item.Name</h4>
-                    <p class="list-group-item-text">@item.EvenDate</p>
-                </a>
-            </div>
-        }
     </div>
-   
-</div>
 
 </div>

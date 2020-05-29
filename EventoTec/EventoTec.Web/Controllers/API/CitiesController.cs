@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EventoTec.Web.Models;
 using EventoTec.Web.Models.Entities;
+using EventoTec.Web.Models.ModelAPI;
 
 namespace EventoTec.Web.Controllers.API
 {
@@ -37,15 +38,36 @@ namespace EventoTec.Web.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            var city = await _context.cities.FindAsync(id);
 
+            var city = await _context.cities.Include(a => a.Events)
+                .FirstOrDefaultAsync(a => a.Id == id);
+            var response = new CityResponse
+            {
+                Description = city.Description,
+                Name = city.Name,
+                Id = city.Id,
+                Slung = city.Slung,
+                Events = city.Events.Select(
+                    p => new EventResponse
+                    {
+                        Description = p.Description,
+                        Name = p.Name,
+                        Id = p.Id,
+                        Duration = p.Duration,
+                        People = p.People,
+                        Picture = p.Picture,
+                        EvenDate = p.EvenDate
+                    }
+                    ).ToList(),
+            };
             if (city == null)
             {
                 return NotFound();
             }
 
-            return Ok(city);
-        }
+            return Ok(response);
+        
+    }
 
         // PUT: api/Cities/5
         [HttpPut("{id}")]

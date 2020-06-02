@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using EventoTec.Web.Models;
 using EventoTec.Web.Models.Entities;
 
+
 namespace EventoTec.Web.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class EventsController : ControllerBase
     {
         private readonly DataDbContext _context;

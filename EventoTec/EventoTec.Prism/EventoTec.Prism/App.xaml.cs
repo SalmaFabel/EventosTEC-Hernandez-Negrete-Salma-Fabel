@@ -1,14 +1,14 @@
 using Prism;
 using Prism.Ioc;
-using EventosTec.Prism.ViewModels;
-using EventosTec.Prism.Views;
+using EventoTec.Prism.ViewModels;
+using EventoTec.Prism.Views;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-namespace EventosTec.Prism
+namespace EventoTec.Prism
 {
     public partial class App
     {
@@ -25,7 +25,7 @@ namespace EventosTec.Prism
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -33,7 +33,7 @@ namespace EventosTec.Prism
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
 }

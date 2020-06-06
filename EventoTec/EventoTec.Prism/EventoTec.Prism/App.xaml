@@ -4,8 +4,8 @@
              xmlns:prism="http://prismlibrary.com"
              x:Class="EventoTec.Prism.App">
   <Application.Resources>
-
-    <!-- Application resource dictionary -->
-
-  </Application.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="UrlAPI">https://localhost:44339/</x:String>
+        </ResourceDictionary>
+    </Application.Resources>
 </prism:PrismApplication>

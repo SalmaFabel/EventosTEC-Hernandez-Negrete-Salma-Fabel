@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EventosTec.Library.Model
 {
-    class Response
+  public  class Response
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
